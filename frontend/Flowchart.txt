@@ -1,0 +1,123 @@
++--------------------------+
+| Frontend: Screen Component |
++--------------------------+
+         | Component Mounts
+         v
++--------------------------+
+|  Initial Setup:          |
+| - Canvas Size Config    |
+| - MathJax Script Load   |
++--------------------------+
+         |
+         v
++--------------------------+
+| User Interaction:        |
+| - Drawing on Canvas      |
+| - Selecting Color/Eraser |
+| - Clicking Buttons       |
++--------------------------+
+    |       |       |
+    |       |       | ('Calculate' Button Click)
+    |       |       v
+    |       | +--------------------------+
+    |       | | Inside sendData Function |
+    |       | +--------------------------+
+    |       |         |
+    |       |         +--> [Get Canvas Content as Base64 Image DataURL]
+    |       |         |
+    |       |         +--> [Get Current 'dict' State (Assigned Variables)]
+    |       |         |
+    |       |         v
+    |       | +--------------------------+
+    |       | | Prepare Request Body:    |
+    |       | | { image: ..., dict_of_vars: ... } |
+    |       | +--------------------------+
+    |       |         |
+    |       |         | (HTTP POST Request)
+    |       |         v
+    |       | +--------------------------+
+    |       | |  Send Request to Backend |
+    |       | |   (`${VITE_API_URL}/calc`) |
+    |       | +--------------------------+
+    |       |         |
+    |       |         |
+    |       |         v
+    |       | +--------------------------+
+    |       | |       (Backend Processes)  | <--- Connects to Backend Flow
+    |       | +--------------------------+
+    |       |         |
+    |       |         | (HTTP Response Received)
+    |       |         v
+    |       | +--------------------------+
+    |       | |  Receive Response Data   |
+    |       | |  ({ message, type, data: [...] })|
+    |       | +--------------------------+
+    |       |         |
+    |       |         +--> [Check if response.data is Array]
+    |       |         |    /
+    |       |         |   / (If Array)
+    |       |         |  v
+    |       | +--------------------------+
+    |       | | Iterate through response.data |
+    |       | +--------------------------+
+    |       |    |      \
+    |       |    |       \ (For each item)
+    |       |    |        v
+    |       |    |  +---------------------+
+    |       |    |  | If item.assign is true |
+    |       |    |  +---------------------+
+    |       |    |     |
+    |       |    |     v
+    |       |    |  [Update 'dict' state with item.expr = item.result]
+    |       |    |
+    |       |    v (After loop)
+    |       | +--------------------------+
+    |       | | Calculate Bounding Box   |
+    |       | |   of Drawing Pixels      |
+    |       | +--------------------------+
+    |       |         |
+    |       |         v
+    |       | +--------------------------+
+    |       | | Calculate Center of      |
+    |       | |   Bounding Box           |
+    |       | +--------------------------+
+    |       |         |
+    |       |         v
+    |       | +--------------------------+
+    |       | | Update 'latexPosition'   |
+    |       | | state (Default Draggable Pos)|
+    |       | +--------------------------+
+    |       |         |
+    |       |         v
+    |       | +--------------------------+
+    |       | | Iterate response.data AGAIN|
+    |       | | (with setTimeout for each)|
+    |       | +--------------------------+
+    |       |    |      \
+    |       |    |       \ (For each item)
+    |       |    |        v
+    |       |    |  +---------------------+
+    |       |    |  | Update 'result' state|
+    |       |    |  | (item.expr, item.result)|
+    |       |    |  +---------------------+
+    |       |    |     |
+    |       |    |     v (Triggers useEffect)
+    |       |    |  +---------------------+
+    |       |    |  |  useEffect([result]): |
+    |       |    |  | - Add item as LaTeX string to 'latexExpression' array |
+    |       |    |  | - CLEAR the Canvas    | <-- Note: Clears drawing
+    |       |    |  +---------------------+
+    |       |    |     |
+    |       |    v (After loop)
+    |       | +--------------------------+
+    |       | | useEffect([latexExpression]):|
+    |       | | - Trigger MathJax Typeset  |
+    |       | +--------------------------+
+    |       |         |
+    |       |         v
+    |       | +--------------------------+
+    |       | | Render LaTeX in Draggable|
+    |       | | Divs (using latexExpression) |
+    |       | +--------------------------+
+    |       |
+    +-------+-------------------------> (Component Renders based on state updates)

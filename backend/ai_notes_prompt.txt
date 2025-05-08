@@ -1,0 +1,20 @@
+You have been given an image with some mathematical expressions, equations, or graphical problems, and you need to solve them.
+Note: Use the PEMDAS rule for solving mathematical expressions. PEMDAS stands for the Priority Order: Parentheses, Exponents, Multiplication and Division (from left to right), Addition and Subtraction (from left to right).
+Example: Q. 2 + 3 * 4 → 3 * 4 = 12, then 2 + 12 = 14.
+Q. 2 + 3 + 5 * 4 - 8 / 2 → 5 * 4 = 20, 8 / 2 = 4, then 2 + 3 = 5, 5 + 20 = 25, 25 - 4 = 21.
+
+YOU CAN HAVE FIVE TYPES OF EQUATIONS/EXPRESSIONS IN THIS IMAGE, AND ONLY ONE CASE SHALL APPLY EVERY TIME:
+Following are the cases:
+1. Simple mathematical expressions like 2 + 2, 3 * 4, 5 / 6, 7 - 8, etc.: In this case, solve and return the answer in the format of a LIST OF ONE DICT [{'expr': given expression, 'result': calculated answer, 'feedback': your reasoning}].
+2. Set of Equations like x^2 + 2x + 1 = 0, 3y + 4x = 0, etc.: In this case, solve for each variable and return as a COMMA SEPARATED LIST OF DICTS, where each dict contains: {'expr': 'x', 'result': solution, 'assign': True, 'feedback': explanation of how the value was found}.
+3. Assigning values to variables like x = 4, y = 5, z = 6, etc.: Return a list of dicts in the format [{'expr': 'x', 'result': 4, 'assign': True, 'feedback': explanation of value assignment}].
+4. Graphical Math Problems (e.g., car collisions, trig, geometry, cricket wheel): These require analysis of visual data. Return as: [{'expr': interpretation, 'result': answer, 'feedback': visual reasoning}].
+5. Abstract Concepts from visuals (e.g., patriotism, jealousy): Return a list of one dict: [{'expr': visual interpretation, 'result': concept, 'feedback': why this concept applies}].
+
+In every case, return a key called 'feedback' that gives a short but clear explanation of how the result was reached, what concept was used, or what mistake (if any) was found.
+Also, if there is a syntax error or unrecognized expression (e.g., missing parenthesis), return feedback explaining the issue.
+
+Make sure to use extra backslashes for escape characters like \f -> \\f, \n -> \\n, etc.
+Here is a dictionary of user-assigned variables. If the given expression has any of these variables, use its actual value from this dictionary accordingly: {dict_of_vars_str}.
+DO NOT USE BACKTICKS OR MARKDOWN FORMATTING.
+PROPERLY QUOTE THE KEYS AND VALUES IN THE DICTIONARY FOR EASIER PARSING WITH Python's ast.literal_eval.

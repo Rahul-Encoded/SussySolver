@@ -1,0 +1,126 @@
++-------------------+
+|   Start Server    |
++-------------------+
+         |
+         v
++-------------------+
+| Load .env Config  |
++-------------------+
+         |
+         v
++-------------------+
+|Initialize FastAPI |
++-------------------+
+         |
+         v
++-------------------+
+| Add CORS Middleware|
++-------------------+
+         |
+         v
++-------------------+
+| Include /calc     |
+|      Router       |
++-------------------+
+         |
+         v
++-------------------+
+| Server Running    |
+|Waiting for Request|
++-------------------+
+         |
+         |  (HTTP POST to /calc)
+         v
++-------------------+
+| FastAPI Receives  |
+|      Request      |
++-------------------+
+         |
+         v
++-------------------+
+| Validate Request  |
+| Body (ImageData)  |
++-------------------+
+    |       \
+    |        \  (Invalid Body)
+    v         \
++-----------+  \  +---------------------+
+| Valid Body|   -->|Return Validation Error|
++-----------+      +---------------------+
+    |                     |
+    v                     |
++-------------------+     |
+| Route Request to  |     |
+|  route.py::run    |     |
++-------------------+     |
+         |                |
+         v                |
++-------------------+     |
+|  Inside run(data) |     |
++-------------------+     |
+         |                |
+         +--> [Extract data.image (from request body)]
+         |
+         +--> [Decode Base64 Image]
+         |
+         +--> [Open Image with PIL]
+         |
+         +--> [Extract dict_of_vars FROM data.dict_of_vars (from request body)] <-- This is the source now!
+         |
+         v
++-------------------+
+| Call utils.py::   |
+| analyze_image with|
+| image & dict_of_vars|
++-------------------+
+         |
+         v
++-------------------+
+|  Inside analyze_image |
+|(Initial setup on import)|
++-------------------+
+         |
+         +--> [Format Prompt using prompt.txt and the RECEIVED dict_of_vars]
+         |
+         +--> [Call Gemini Model (send prompt & img)]
+         |
+         +--> [Receive Response from Gemini]
+         |
+         +--> [Parse Response Text (ast.literal_eval)]
+         |
+         +--> [Process Parsed Answer(s) (Add 'assign' flag)]
+         |
+         v
++-------------------+
+| Return Processed  |
+| Answer(s) (Note:  |
+| returns LAST item)|
++-------------------+
+         |
+         v
++-------------------+
+| Back in route.py::run|
++-------------------+
+         |
+         v
++-------------------+
+| Receive Analysis  |
+|      Result       |
++-------------------+
+         |
+         v
++-------------------+
+| Prepare Final     |
+| Response Dictionary|
++-------------------+
+         |
+         v
++-------------------+
+| Return HTTP       |
+| Response to Client|
++-------------------+
+         |
+         v
++-------------------+
+| Back to Waiting   | <-------------------+
++-------------------+
