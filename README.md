@@ -1,6 +1,6 @@
-# SussySolver - AI Blackboard Math Solver (No Cap) ✍️🧠
+# AI Blackboard Math Solver (No Cap) ✍️🧠
 
-Okay, so peep this project. It's basically a digital blackboard where you can doodle math problems like you're in class, but then instead of getting stuck, you yeet it to an AI, and it, like, *solves* it for you. Trying to make finding the hypotenuse slightly less... tragic? Def.
+Okay, so peep this project. It's basically a digital whiteboard where you can doodle math problems like you're in class, but then instead of getting stuck, you yeet it to an AI, and it, like, *solves* it for you. Trying to make finding the hypotenuse slightly less... tragic? Def.
 
 ## What's the Tea ☕ (Features)
 
@@ -24,6 +24,7 @@ Here's what's making this project run rn:
 *   **Framer Motion:** Adding those smooth animations for the draggable math output. ✨
 *   **KaTeX:** THE real MVP for making math notation look fly. Way less drama than other options. 📈
 *   **@mantine/core:** Snagged the `ColorSwatch` and `Group` components 'cause they looked clean.
+*   **ui/button:** Probably using some pre-built button components (like from shadcn/ui or similar).
 *   **dotenv (for VITE\_API\_URL):** Keeping that API URL secret and sound. 👀
 
 ### Backend (The Brains)
