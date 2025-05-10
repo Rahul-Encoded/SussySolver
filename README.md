@@ -1,6 +1,6 @@
 # AI Blackboard Math Solver (No Cap) ✍️🧠
 
-Okay, so peep this project. It's basically a digital whiteboard where you can doodle math problems like you're in class, but then instead of getting stuck, you yeet it to an AI, and it, like, *solves* it for you. Trying to make finding the hypotenuse slightly less... tragic? Def.
+Okay, so peep this project. It's basically a digital blackboard where you can doodle math problems like you're in class, but then instead of getting stuck, you yeet it to an AI, and it, like, *solves* it for you. Trying to make finding the hypotenuse slightly less... tragic? Def.
 
 ## What's the Tea ☕ (Features)
 
