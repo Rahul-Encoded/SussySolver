@@ -6,7 +6,7 @@
 +--------------------------+
 |  Initial Setup:          |
 | - Canvas Size Config    |
-| - MathJax Script Load   |
+| - Load KaTeX            |
 +--------------------------+
          |
          v
@@ -40,7 +40,6 @@
     |       | |   (`${VITE_API_URL}/calc`) |
     |       | +--------------------------+
     |       |         |
-    |       |         |
     |       |         v
     |       | +--------------------------+
     |       | |       (Backend Processes)  | <--- Connects to Backend Flow
@@ -72,52 +71,21 @@
     |       |    |
     |       |    v (After loop)
     |       | +--------------------------+
-    |       | | Calculate Bounding Box   |
-    |       | |   of Drawing Pixels      |
+    |       | | Map response.data into   |
+    |       | | generatedOutputs array   |
+    |       | | (expression, answer)     |
     |       | +--------------------------+
     |       |         |
     |       |         v
     |       | +--------------------------+
-    |       | | Calculate Center of      |
-    |       | |   Bounding Box           |
+    |       | | Set generatedOutputs     |
+    |       | | (Triggers useEffect)     |
     |       | +--------------------------+
     |       |         |
     |       |         v
     |       | +--------------------------+
-    |       | | Update 'latexPosition'   |
-    |       | | state (Default Draggable Pos)|
-    |       | +--------------------------+
-    |       |         |
-    |       |         v
-    |       | +--------------------------+
-    |       | | Iterate response.data AGAIN|
-    |       | | (with setTimeout for each)|
-    |       | +--------------------------+
-    |       |    |      \
-    |       |    |       \ (For each item)
-    |       |    |        v
-    |       |    |  +---------------------+
-    |       |    |  | Update 'result' state|
-    |       |    |  | (item.expr, item.result)|
-    |       |    |  +---------------------+
-    |       |    |     |
-    |       |    |     v (Triggers useEffect)
-    |       |    |  +---------------------+
-    |       |    |  |  useEffect([result]): |
-    |       |    |  | - Add item as LaTeX string to 'latexExpression' array |
-    |       |    |  | - CLEAR the Canvas    | <-- Note: Clears drawing
-    |       |    |  +---------------------+
-    |       |    |     |
-    |       |    v (After loop)
-    |       | +--------------------------+
-    |       | | useEffect([latexExpression]):|
-    |       | | - Trigger MathJax Typeset  |
-    |       | +--------------------------+
-    |       |         |
-    |       |         v
-    |       | +--------------------------+
-    |       | | Render LaTeX in Draggable|
-    |       | | Divs (using latexExpression) |
+    |       | | Render MathOutput Components |
+    |       | | in a Draggable Div       |
     |       | +--------------------------+
     |       |
     +-------+-------------------------> (Component Renders based on state updates)
